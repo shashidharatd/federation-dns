@@ -19,8 +19,8 @@ package route53
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/route53"
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 )
 
 // Compile time check for interface adherence

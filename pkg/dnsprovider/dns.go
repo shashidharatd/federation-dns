@@ -19,7 +19,7 @@ package dnsprovider
 import (
 	"reflect"
 
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 )
 
 // Interface is an abstract, pluggable interface for DNS providers.

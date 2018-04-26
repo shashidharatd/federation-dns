@@ -22,13 +22,13 @@ import (
 	"os"
 	"testing"
 
-	"k8s.io/federation/pkg/dnsprovider"
-	route53testing "k8s.io/federation/pkg/dnsprovider/providers/aws/route53/stubs"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	route53testing "github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/aws/route53/stubs"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/route53"
-	"k8s.io/federation/pkg/dnsprovider/tests"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/tests"
 )
 
 func newTestInterface() (dnsprovider.Interface, error) {

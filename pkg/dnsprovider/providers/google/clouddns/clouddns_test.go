@@ -22,9 +22,9 @@ import (
 	"os"
 	"testing"
 
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
-	"k8s.io/federation/pkg/dnsprovider/tests"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/tests"
 )
 
 func newTestInterface(zones []string) (dnsprovider.Interface, error) {

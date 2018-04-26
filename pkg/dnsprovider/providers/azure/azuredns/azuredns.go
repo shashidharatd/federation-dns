@@ -20,9 +20,9 @@ package azuredns
 import (
 	"fmt"
 	"github.com/golang/glog"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	gcfg "gopkg.in/gcfg.v1"
 	"io"
-	"k8s.io/federation/pkg/dnsprovider"
 )
 
 const (

@@ -17,8 +17,8 @@ limitations under the License.
 package route53
 
 import (
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/route53"

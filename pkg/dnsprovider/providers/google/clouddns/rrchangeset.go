@@ -19,8 +19,8 @@ package clouddns
 import (
 	"fmt"
 
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 )
 
 // Compile time check for interface adherence

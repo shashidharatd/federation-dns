@@ -17,8 +17,8 @@ limitations under the License.
 package stubs
 
 import (
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 	"google.golang.org/api/googleapi"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 )
 
 // Compile time check for interface adherence

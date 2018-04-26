@@ -30,9 +30,9 @@ import (
 	etcdc "github.com/coreos/etcd/client"
 	"github.com/coreos/etcd/pkg/transport"
 	"github.com/golang/glog"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	"gopkg.in/gcfg.v1"
 	utilnet "k8s.io/apimachinery/pkg/util/net"
-	"k8s.io/federation/pkg/dnsprovider"
 )
 
 // "coredns" should be used to use this DNS provider

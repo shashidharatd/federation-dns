@@ -19,7 +19,7 @@ package stubs
 import (
 	"sync"
 
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 )
 
 // Compile time check for interface adherence

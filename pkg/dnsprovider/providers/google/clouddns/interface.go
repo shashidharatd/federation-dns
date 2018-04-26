@@ -17,8 +17,8 @@ limitations under the License.
 package clouddns
 
 import (
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 )
 
 var _ dnsprovider.Interface = Interface{}

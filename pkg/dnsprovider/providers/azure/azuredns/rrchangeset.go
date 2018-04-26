@@ -21,7 +21,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/arm/dns"
 	"github.com/golang/glog"
-	"k8s.io/federation/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 )
 
 // Compile time check for interface adherence

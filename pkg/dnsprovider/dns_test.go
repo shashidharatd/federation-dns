@@ -19,7 +19,7 @@ package dnsprovider
 import (
 	"testing"
 
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 )
 
 // Compile time interface check

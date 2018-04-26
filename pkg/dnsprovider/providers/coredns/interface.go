@@ -17,8 +17,8 @@ limitations under the License.
 package coredns
 
 import (
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/providers/coredns/stubs"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/coredns/stubs"
 )
 
 // Compile time check for interface adherence

@@ -18,7 +18,7 @@ package azuredns
 
 import (
 	"github.com/Azure/azure-sdk-for-go/arm/dns"
-	"k8s.io/federation/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 )
 
 // Compile time check for interface adherence

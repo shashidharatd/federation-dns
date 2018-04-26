@@ -24,8 +24,8 @@ import (
 	"github.com/Azure/go-autorest/autorest/azure"
 	"github.com/Azure/go-autorest/autorest/to"
 	"github.com/golang/glog"
-	"k8s.io/federation/pkg/dnsprovider"
-	azurestub "k8s.io/federation/pkg/dnsprovider/providers/azure/azuredns/stubs"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	azurestub "github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/azure/azuredns/stubs"
 )
 
 // API is an interface abstracting the Azure DNS clients from azure-sdk-for-go behind a single interface

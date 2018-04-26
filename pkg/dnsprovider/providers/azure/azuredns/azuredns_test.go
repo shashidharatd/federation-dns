@@ -28,10 +28,10 @@ import (
 	"github.com/Azure/azure-sdk-for-go/arm/dns"
 	"github.com/Azure/go-autorest/autorest/to"
 
-	"k8s.io/federation/pkg/dnsprovider"
-	azurestub "k8s.io/federation/pkg/dnsprovider/providers/azure/azuredns/stubs"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
-	"k8s.io/federation/pkg/dnsprovider/tests"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	azurestub "github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/azure/azuredns/stubs"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/tests"
 )
 
 func newTestInterface() (dnsprovider.Interface, error) {

@@ -23,8 +23,8 @@ import (
 
 	dnsmsg "github.com/coredns/coredns/plugin/etcd/msg"
 	etcdc "github.com/coreos/etcd/client"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	"golang.org/x/net/context"
-	"k8s.io/federation/pkg/dnsprovider"
 )
 
 // Compile time check for interface adherence

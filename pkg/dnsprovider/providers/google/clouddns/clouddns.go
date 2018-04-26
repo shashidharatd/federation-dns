@@ -28,9 +28,9 @@ import (
 	dns "google.golang.org/api/dns/v1"
 	gcfg "gopkg.in/gcfg.v1"
 
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/stubs"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/stubs"
 	"k8s.io/kubernetes/pkg/cloudprovider/providers/gce"
 )
 

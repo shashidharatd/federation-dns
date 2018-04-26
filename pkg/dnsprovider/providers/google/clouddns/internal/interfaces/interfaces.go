@@ -19,8 +19,8 @@ package interfaces
 import (
 	"context"
 
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 	"google.golang.org/api/googleapi"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
 )
 
 // Interfaces to directly mirror the Google Cloud DNS API structures.

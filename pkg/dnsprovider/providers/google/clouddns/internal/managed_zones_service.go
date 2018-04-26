@@ -19,9 +19,9 @@ package internal
 import (
 	"strings"
 
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 	dns "google.golang.org/api/dns/v1"
 	"k8s.io/apimachinery/pkg/util/uuid"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
 )
 
 // Compile time check for interface adherence

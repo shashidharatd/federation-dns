@@ -19,8 +19,8 @@ package stubs
 import (
 	"fmt"
 
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 )
 
 // Compile time check for interface adherence

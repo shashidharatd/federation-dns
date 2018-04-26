@@ -17,9 +17,9 @@ limitations under the License.
 package internal
 
 import (
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 	dns "google.golang.org/api/dns/v1"
-	"k8s.io/federation/pkg/dnsprovider/providers/google/clouddns/internal/interfaces"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
 )
 
 // Compile time check for interface adherence

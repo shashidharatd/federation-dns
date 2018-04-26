@@ -22,9 +22,9 @@ import (
 	dnsmsg "github.com/coredns/coredns/plugin/etcd/msg"
 	etcdc "github.com/coreos/etcd/client"
 	"github.com/golang/glog"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/rrstype"
 	"golang.org/x/net/context"
-	"k8s.io/federation/pkg/dnsprovider"
-	"k8s.io/federation/pkg/dnsprovider/rrstype"
 	"net"
 )
 
