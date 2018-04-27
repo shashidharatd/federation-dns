@@ -1,0 +1,25 @@
+
+[prune]
+  go-tests = true
+  unused-packages = true
+
+[[override]]
+  name = "github.com/Azure/azure-sdk-for-go"
+  version = "v12.1.0-beta"
+
+[[constraint]]
+  branch = "release-1.9"
+  name = "k8s.io/api"
+
+[[constraint]]
+  branch = "release-1.9"
+  name = "k8s.io/apimachinery"
+
+[[constraint]]
+  branch = "release-6.0"
+  name = "k8s.io/client-go"
+
+[[constraint]]
+  branch = "dns"
+  name = "github.com/kubernetes-sigs/federation-v2"
+  source = "github.com/shashidharatd/federation-v2"
