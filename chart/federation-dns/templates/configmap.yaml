@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "federation-dns.fullname" . }}
+  labels:
+    app: {{ template "federation-dns.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  provider.conf: |-
+    [Global]
+    etcd-endpoints = http://etcd.{{ .Values.corednsNamespace }}:2379
+    zones = {{ .Values.federationDomain }}
+    coredns-endpoints = coredns-coredns.{{ .Values.corednsNamespace }}:53
