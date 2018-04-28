@@ -31,7 +31,6 @@ import (
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns/internal/stubs"
-	"k8s.io/kubernetes/pkg/cloudprovider/providers/gce"
 )
 
 const (
@@ -68,7 +67,7 @@ func newCloudDns(config io.Reader) (*Interface, error) {
 			projectID = cfg.Global.ProjectID
 		}
 		if cfg.Global.TokenURL != "" {
-			tokenSource = gce.NewAltTokenSource(cfg.Global.TokenURL, cfg.Global.TokenBody)
+			tokenSource = NewAltTokenSource(cfg.Global.TokenURL, cfg.Global.TokenBody)
 		}
 	}
 	return CreateInterface(projectID, tokenSource)
