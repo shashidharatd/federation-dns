@@ -1,0 +1,15 @@
+isClusterService: false
+serviceType: "LoadBalancer"
+serviceProtocol: "UDP"
+plugins:
+  prometheus:
+    enabled: false
+  cache:
+    enabled: false
+  kubernetes:
+    enabled: false
+  etcd:
+    enabled: true
+    zones:
+    - "dzone.io."
+    endpoint: "http://etcd.fed-dns:2379"

@@ -1,0 +1,5 @@
+apiVersion: multiclusterdns.k8s.io/v1alpha1
+kind: MultiClusterDNSLb
+metadata:
+  name: fs1
+spec:
