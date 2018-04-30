@@ -60,6 +60,7 @@ func (rrsets ResourceRecordSets) Get(name string) ([]dnsprovider.ResourceRecordS
 
 	var list []dnsprovider.ResourceRecordSet
 
+	rrset := ResourceRecordSet{name: name, rrdatas: []string{}, rrsets: &rrsets}
 	for _, node := range response.Node.Nodes {
 		service := dnsmsg.Service{}
 		err = json.Unmarshal([]byte(node.Value), &service)
@@ -67,7 +68,6 @@ func (rrsets ResourceRecordSets) Get(name string) ([]dnsprovider.ResourceRecordS
 			return nil, fmt.Errorf("Failed to unmarshall json data, err: %v", err)
 		}
 
-		rrset := ResourceRecordSet{name: name, rrdatas: []string{}, rrsets: &rrsets}
 		ip := net.ParseIP(service.Host)
 		switch {
 		case ip == nil:
@@ -81,8 +81,8 @@ func (rrsets ResourceRecordSets) Get(name string) ([]dnsprovider.ResourceRecordS
 		}
 		rrset.rrdatas = append(rrset.rrdatas, service.Host)
 		rrset.ttl = int64(service.TTL)
-		list = append(list, rrset)
 	}
+	list = append(list, rrset)
 
 	return list, nil
 }
