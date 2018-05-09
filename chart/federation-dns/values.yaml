@@ -12,6 +12,12 @@ federationDomain: dzone.io.
 corednsNamespace: default
 dnsProvider: coredns
 verboseLogLevel: 4
+variant: v1
+
+service:
+  type: LoadBalancer
+  externalPort: 80
+  internalPort: 8080
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

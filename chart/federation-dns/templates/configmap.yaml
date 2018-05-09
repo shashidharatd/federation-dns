@@ -1,3 +1,4 @@
+{{- if eq "v1" .Values.variant }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -13,3 +14,4 @@ data:
     etcd-endpoints = http://etcd.{{ .Values.corednsNamespace }}:2379
     zones = {{ .Values.federationDomain }}
     coredns-endpoints = coredns-coredns.{{ .Values.corednsNamespace }}:53
+{{- end }}

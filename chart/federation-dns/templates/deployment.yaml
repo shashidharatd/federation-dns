@@ -16,9 +16,11 @@ spec:
         release: {{ .Release.Name }}
     spec:
       volumes:
+      {{- if eq "v1" .Values.variant }}
       - name: dns-config
         configMap:
           name: {{ template "federation-dns.fullname" . }}
+      {{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -27,14 +29,19 @@ spec:
         args:
         - "--federation-name={{ .Values.federationName }}"
         - "--zone-name={{ .Values.federationDomain }}"
+        - "--variant={{ .Values.variant }}"
+        {{- if eq "v1" .Values.variant }}
         - "--provider={{ .Values.dnsProvider }}"
         - "--provider-config=/etc/federation/provider.conf"
+        {{- end }}
         - "--logtostderr=true"
         - "--v={{ .Values.verboseLogLevel }}"
         volumeMounts:
+        {{- if eq "v1" .Values.variant }}
         - name: dns-config
           mountPath: /etc/federation
           readOnly: true
+        {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
