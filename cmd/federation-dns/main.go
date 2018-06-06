@@ -26,6 +26,7 @@ import (
 	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset"
 	"github.com/shashidharatd/federation-dns/pkg/controller/dns"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
+	"github.com/shashidharatd/federation-dns/pkg/source"
 	restclient "k8s.io/client-go/rest"
 
 	// DNS providers
@@ -42,6 +43,8 @@ var zoneID = flag.String("zone-id", "", "Zone ID, needed if the zone name is not
 var dnsSuffix = flag.String("dns-suffix", "", "DNS Suffix to use when publishing federated service names.  Defaults to zone-name")
 var provider = flag.String("provider", "", "DNS provider. Valid values are: "+fmt.Sprintf("%q", dnsprovider.RegisteredDnsProviders()))
 var configFile = flag.String("provider-config", "", "Path to config file for configuring DNS provider.")
+var variant = flag.String("variant", "v1", "v1 or v2")
+var servicePort = flag.String("service-port", "8080", "port on which to make listing dns endpoint service available")
 
 func main() {
 	flag.Parse()
@@ -56,14 +59,25 @@ func main() {
 	restclient.AddUserAgent(config, userAgent)
 	fedClient := fedclientset.NewForConfigOrDie(config)
 
-	controller, err := dns.NewDNSController(fedClient, *provider, *configFile, *federationName, *dnsSuffix, *zoneName, *zoneID)
-	if err != nil {
-		glog.Fatalf("Error starting dns controller: %v", err)
+	switch *variant {
+	case "v1":
+		controller, err := dns.NewDNSController(fedClient, *provider, *configFile, *federationName, *dnsSuffix, *zoneName, *zoneID)
+		if err != nil {
+			glog.Fatalf("Error starting dns controller: %v", err)
+		}
+
+		glog.Infof("Starting dns controller")
+		controller.Run(3, stopChan)
+
+		// Blockforever
+		select {}
+	case "v2":
+		controller, err := source.NewFederationSource(fedClient.MulticlusterdnsV1alpha1(), "", *federationName, *zoneName, *servicePort)
+		if err != nil {
+			glog.Fatalf("Error starting dns controller: %v", err)
+		}
+		controller.Run()
+	default:
+		glog.Fatalf("incorrect variant %s, should be v1 or v2", *variant)
 	}
-
-	glog.Infof("Starting dns controller")
-	controller.Run(3, stopChan)
-
-	// Blockforever
-	select {}
 }
