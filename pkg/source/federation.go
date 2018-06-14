@@ -143,7 +143,7 @@ func (ds *federationDNSSource) HandleRequest(conn net.Conn) {
 
 // Endpoints returns endpoint objects for each MultiClusterDNSLb object that should be processed.
 func (ds *federationDNSSource) Endpoints() ([]*Endpoint, error) {
-	dnsObjects, err := ds.client.MultiClusterDNSLbs(ds.namespace).List(v1.ListOptions{})
+	dnsObjects, err := ds.client.MultiClusterServiceDNSRecords(ds.namespace).List(v1.ListOptions{})
 	if err != nil {
 		glog.Errorf("Listing DNS objects failed: %v", err)
 		return nil, err
@@ -162,7 +162,7 @@ func (ds *federationDNSSource) Endpoints() ([]*Endpoint, error) {
 	return endpoints, nil
 }
 
-func getNamesForDNSObject(dnsObject *feddnsv1a1.MultiClusterDNSLb, federation, dnsSuffix string) ([]*Endpoint, error) {
+func getNamesForDNSObject(dnsObject *feddnsv1a1.MultiClusterServiceDNSRecord, federation, dnsSuffix string) ([]*Endpoint, error) {
 	endpoints := []*Endpoint{}
 
 	commonPrefix := strings.Join([]string{dnsObject.Name, dnsObject.Namespace, federation, "svc"}, ".")
@@ -193,7 +193,7 @@ func getNamesForDNSObject(dnsObject *feddnsv1a1.MultiClusterDNSLb, federation, d
 }
 
 // getHealthyTargets returns the hostnames and/or IP addresses of healthy endpoints for the service, at a zone, region and global level (or an error)
-func getHealthyTargets(zone, region string, dnsObject *feddnsv1a1.MultiClusterDNSLb) (zoneTargets, regionTargets, globalTargets Targets) {
+func getHealthyTargets(zone, region string, dnsObject *feddnsv1a1.MultiClusterServiceDNSRecord) (zoneTargets, regionTargets, globalTargets Targets) {
 	// If federated dnsObject is deleted, return empty endpoints, so that DNS records are removed
 	if dnsObject.DeletionTimestamp != nil {
 		return zoneTargets, regionTargets, globalTargets

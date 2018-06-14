@@ -41,8 +41,8 @@ import (
 	feddnsv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/apis/multiclusterdns/v1alpha1"
 	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset"
 	fakefedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/fake"
-	"github.com/kubernetes-sigs/federation-v2/pkg/controller/util/test"
 
+	"github.com/shashidharatd/federation-dns/pkg/controller/util/test"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns" // Only for unit testing purposes.
 )
@@ -71,7 +71,7 @@ const (
 	c1Zone = "us1"
 	c2Zone = "eu1"
 
-	dnslb = "multiclusterdnslbs"
+	servicedns = "multiclusterservicednsrecords"
 
 	lb1 = "10.20.30.1"
 	lb2 = "10.20.30.2"
@@ -80,7 +80,7 @@ const (
 
 type step struct {
 	operation string
-	status    feddnsv1alpha1.MultiClusterDNSLbStatus
+	status    feddnsv1alpha1.MultiClusterServiceDNSRecordStatus
 	expected  sets.String
 }
 
@@ -131,7 +131,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -156,7 +156,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -181,7 +181,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -203,7 +203,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -228,7 +228,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -248,7 +248,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			),
 		}, {
 			operation: OP_DELETE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -273,7 +273,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			expected:  sets.NewString(),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -293,7 +293,7 @@ func createTestServiceDeployments() map[string]testDeployment {
 			),
 		}, {
 			operation: OP_UPDATE,
-			status: feddnsv1alpha1.MultiClusterDNSLbStatus{
+			status: feddnsv1alpha1.MultiClusterServiceDNSRecordStatus{
 				DNS: []feddnsv1alpha1.ClusterDNS{
 					{
 						Cluster: c1, Zone: c1Zone, Region: c1Region,
@@ -338,10 +338,10 @@ func TestServiceDNSController(t *testing.T) {
 				federation, "", dnsZone, "")
 			dc.netWrapper = netmock
 			if err != nil {
-				t.Errorf("error initializing dns controller: %v", err)
+				t.Errorf("error initializing federation dns controller: %v", err)
 			}
 			stop := make(chan struct{})
-			t.Logf("Running DNS Controller")
+			t.Logf("Running federation dns Controller")
 			go dc.Run(2, stop)
 
 			dnsObj := NewDNSObject(name)
@@ -350,16 +350,16 @@ func TestServiceDNSController(t *testing.T) {
 				switch step.operation {
 				case OP_ADD:
 					dnsObjWatch.Add(dnsObj)
-					require.NoError(t, WaitForObjectUpdate(t, dc.dnsObjectStore, key, dnsObj, dnsObjectStatusCompare))
+					require.NoError(t, WaitForObjectUpdate(t, dc.serviceDNSObjectStore, key, dnsObj, dnsObjectStatusCompare))
 				case OP_UPDATE:
 					dnsObj.Status = step.status
 					dnsObjWatch.Modify(dnsObj)
-					require.NoError(t, WaitForObjectUpdate(t, dc.dnsObjectStore, key, dnsObj, dnsObjectStatusCompare))
+					require.NoError(t, WaitForObjectUpdate(t, dc.serviceDNSObjectStore, key, dnsObj, dnsObjectStatusCompare))
 				case OP_DELETE:
 					dnsObj.ObjectMeta.Finalizers = append(dnsObj.ObjectMeta.Finalizers, metav1.FinalizerOrphanDependents)
 					dnsObj.DeletionTimestamp = &metav1.Time{Time: time.Now()}
 					dnsObjWatch.Delete(dnsObj)
-					require.NoError(t, WaitForObjectDeletion(t, dc.dnsObjectStore, key))
+					require.NoError(t, WaitForObjectDeletion(dc.serviceDNSObjectStore, key))
 				}
 
 				waitForDNSRecords(t, dc, step.expected)
@@ -512,8 +512,8 @@ func TestServiceDNSControllerInitParams(t *testing.T) {
 type compareFunc func(actual, desired runtime.Object) (match bool)
 
 func dnsObjectStatusCompare(actualObj, desiredObj runtime.Object) bool {
-	actual := actualObj.(*feddnsv1alpha1.MultiClusterDNSLb)
-	desired := desiredObj.(*feddnsv1alpha1.MultiClusterDNSLb)
+	actual := actualObj.(*feddnsv1alpha1.MultiClusterServiceDNSRecord)
+	desired := desiredObj.(*feddnsv1alpha1.MultiClusterServiceDNSRecord)
 	if !reflect.DeepEqual(actual.Status, desired.Status) {
 		return false
 	}
@@ -544,8 +544,8 @@ func WaitForObjectUpdate(t *testing.T, store cache.Store, key string, desired ru
 	return err
 }
 
-func NewDNSObject(name string) *feddnsv1alpha1.MultiClusterDNSLb {
-	return &feddnsv1alpha1.MultiClusterDNSLb{
+func NewDNSObject(name string) *feddnsv1alpha1.MultiClusterServiceDNSRecord {
+	return &feddnsv1alpha1.MultiClusterServiceDNSRecord{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      name,
 			Namespace: namespace,
@@ -553,8 +553,8 @@ func NewDNSObject(name string) *feddnsv1alpha1.MultiClusterDNSLb {
 	}
 }
 
-// WaitForObjectDeletion waits for the cluster service to be deleted.
-func WaitForObjectDeletion(t *testing.T, store cache.Store, key string) error {
+// WaitForObjectDeletion waits for the object to be deleted.
+func WaitForObjectDeletion(store cache.Store, key string) error {
 	err := wait.PollImmediate(retryInterval, wait.ForeverTestTimeout, func() (bool, error) {
 		_, found, _ := store.GetByKey(key)
 		if !found {
@@ -566,22 +566,21 @@ func WaitForObjectDeletion(t *testing.T, store cache.Store, key string) error {
 }
 
 func setupFakeInfraForFederation() (fedclientset.Interface, *testutil.WatcherDispatcher) {
-
 	client := &fakefedclientset.Clientset{}
-	testutil.RegisterFakeList(dnslb, &client.Fake,
-		&feddnsv1alpha1.MultiClusterDNSLbList{Items: []feddnsv1alpha1.MultiClusterDNSLb{}})
-	dnsWatch := testutil.RegisterFakeWatch(dnslb, &client.Fake)
-	testutil.RegisterFakeOnCreate(dnslb, &client.Fake, dnsWatch)
-	testutil.RegisterFakeOnUpdate(dnslb, &client.Fake, dnsWatch)
-	testutil.RegisterFakeOnDelete(dnslb, &client.Fake, dnsWatch, dnsLbObjectGetter)
+	testutil.RegisterFakeList(servicedns, &client.Fake,
+		&feddnsv1alpha1.MultiClusterServiceDNSRecordList{Items: []feddnsv1alpha1.MultiClusterServiceDNSRecord{}})
+	dnsWatch := testutil.RegisterFakeWatch(servicedns, &client.Fake)
+	testutil.RegisterFakeOnCreate(servicedns, &client.Fake, dnsWatch)
+	testutil.RegisterFakeOnUpdate(servicedns, &client.Fake, dnsWatch)
+	testutil.RegisterFakeOnDelete(servicedns, &client.Fake, dnsWatch, serviceDNSObjectGetter)
 
 	return client, dnsWatch
 }
 
-// dnsLbObjectGetter gives dummy service objects to use with RegisterFakeOnDelete
-func dnsLbObjectGetter(name, namespace string) runtime.Object {
-	dnsLb := new(feddnsv1alpha1.MultiClusterDNSLb)
-	dnsLb.Name = name
-	dnsLb.Namespace = namespace
-	return dnsLb
+// serviceDNSObjectGetter gives dummy ServiceDNS objects to use with RegisterFakeOnDelete
+func serviceDNSObjectGetter(name, namespace string) runtime.Object {
+	serviceDNSObject := new(feddnsv1alpha1.MultiClusterServiceDNSRecord)
+	serviceDNSObject.Name = name
+	serviceDNSObject.Namespace = namespace
+	return serviceDNSObject
 }
