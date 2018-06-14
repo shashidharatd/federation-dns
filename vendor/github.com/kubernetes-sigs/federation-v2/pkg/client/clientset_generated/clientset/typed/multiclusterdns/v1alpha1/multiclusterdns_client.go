@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import (
 
 type MulticlusterdnsV1alpha1Interface interface {
 	RESTClient() rest.Interface
-	MultiClusterDNSLbsGetter
+	MultiClusterServiceDNSRecordsGetter
 }
 
 // MulticlusterdnsV1alpha1Client is used to interact with features provided by the multiclusterdns.k8s.io group.
@@ -32,8 +32,8 @@ type MulticlusterdnsV1alpha1Client struct {
 	restClient rest.Interface
 }
 
-func (c *MulticlusterdnsV1alpha1Client) MultiClusterDNSLbs(namespace string) MultiClusterDNSLbInterface {
-	return newMultiClusterDNSLbs(c, namespace)
+func (c *MulticlusterdnsV1alpha1Client) MultiClusterServiceDNSRecords(namespace string) MultiClusterServiceDNSRecordInterface {
+	return newMultiClusterServiceDNSRecords(c, namespace)
 }
 
 // NewForConfig creates a new MulticlusterdnsV1alpha1Client for the given config.

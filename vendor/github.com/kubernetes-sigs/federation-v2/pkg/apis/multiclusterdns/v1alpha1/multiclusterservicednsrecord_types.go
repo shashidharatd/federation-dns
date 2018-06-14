@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,9 +22,10 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apiserver/pkg/endpoints/request"
 
-	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/validation/field"
+
+	corev1 "k8s.io/api/core/v1"
 
 	"github.com/kubernetes-sigs/federation-v2/pkg/apis/multiclusterdns"
 )
@@ -32,33 +33,34 @@ import (
 // +genclient
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// MultiClusterDNSLb
+// MultiClusterServiceDNSRecord holds information necessary to program DNS for cross cluster service discovery
 // +k8s:openapi-gen=true
-// +resource:path=multiclusterdnslbs,strategy=MultiClusterDNSLbStrategy
-type MultiClusterDNSLb struct {
+// +resource:path=multiclusterservicednsrecords,strategy=MultiClusterServiceDNSRecordStrategy
+type MultiClusterServiceDNSRecord struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   MultiClusterDNSLbSpec   `json:"spec,omitempty"`
-	Status MultiClusterDNSLbStatus `json:"status,omitempty"`
+	Spec   MultiClusterServiceDNSRecordSpec   `json:"spec,omitempty"`
+	Status MultiClusterServiceDNSRecordStatus `json:"status,omitempty"`
 }
 
-// MultiClusterDNSLbSpec defines the desired state of MultiClusterDNSLb
-type MultiClusterDNSLbSpec struct {
+// MultiClusterServiceDNSRecordSpec defines the desired state of MultiClusterServiceDNSRecord
+type MultiClusterServiceDNSRecordSpec struct {
 	// FederationName is the name of the federation to which the corresponding federated service belongs
 	FederationName string `json:"federationName,omitempty"`
 	// DNSSuffix is the suffix (domain) to append to DNS names
 	DNSSuffix string `json:"dnsSuffix,omitempty"`
 }
 
-// MultiClusterDNSLbStatus defines the observed state of MultiClusterDNSLb
-type MultiClusterDNSLbStatus struct {
+// MultiClusterServiceDNSRecordStatus defines the observed state of MultiClusterServiceDNSRecord
+type MultiClusterServiceDNSRecordStatus struct {
 	DNS []ClusterDNS `json:"dns,omitempty"`
 }
 
+// ClusterDNS defines the observed status of LoadBalancer within a cluster.
 type ClusterDNS struct {
 	// Cluster name
-	Cluster string
+	Cluster string `json:"cluster,omitempty"`
 	// LoadBalancer for the corresponding service
 	LoadBalancer corev1.LoadBalancerStatus `json:"loadBalancer,omitempty"`
 	// Zone to which the cluster belongs
@@ -67,18 +69,18 @@ type ClusterDNS struct {
 	Region string `json:"region,omitempty"`
 }
 
-// Validate checks that an instance of MultiClusterDNSLb is well formed
-func (MultiClusterDNSLbStrategy) Validate(ctx request.Context, obj runtime.Object) field.ErrorList {
-	o := obj.(*multiclusterdns.MultiClusterDNSLb)
-	log.Printf("Validating fields for MultiClusterDNSLb %s\n", o.Name)
+// Validate checks that an instance of MultiClusterServiceDNSRecord is well formed
+func (MultiClusterServiceDNSRecordStrategy) Validate(ctx request.Context, obj runtime.Object) field.ErrorList {
+	o := obj.(*multiclusterdns.MultiClusterServiceDNSRecord)
+	log.Printf("Validating fields for MultiClusterServiceDNSRecord %s\n", o.Name)
 	errors := field.ErrorList{}
 	// perform validation here and add to errors using field.Invalid
 	return errors
 }
 
-// DefaultingFunction sets default MultiClusterDNSLb field values
-func (MultiClusterDNSLbSchemeFns) DefaultingFunction(o interface{}) {
-	obj := o.(*MultiClusterDNSLb)
+// DefaultingFunction sets default MultiClusterServiceDNSRecord field values
+func (MultiClusterServiceDNSRecordSchemeFns) DefaultingFunction(o interface{}) {
+	obj := o.(*MultiClusterServiceDNSRecord)
 	// set default field values here
-	log.Printf("Defaulting fields for MultiClusterDNSLb %s\n", obj.Name)
+	log.Printf("Defaulting fields for MultiClusterServiceDNSRecord %s\n", obj.Name)
 }

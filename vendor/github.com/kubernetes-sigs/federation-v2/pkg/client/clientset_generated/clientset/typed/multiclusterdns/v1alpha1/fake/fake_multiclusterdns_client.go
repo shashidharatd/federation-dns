@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ type FakeMulticlusterdnsV1alpha1 struct {
 	*testing.Fake
 }
 
-func (c *FakeMulticlusterdnsV1alpha1) MultiClusterDNSLbs(namespace string) v1alpha1.MultiClusterDNSLbInterface {
-	return &FakeMultiClusterDNSLbs{c, namespace}
+func (c *FakeMulticlusterdnsV1alpha1) MultiClusterServiceDNSRecords(namespace string) v1alpha1.MultiClusterServiceDNSRecordInterface {
+	return &FakeMultiClusterServiceDNSRecords{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

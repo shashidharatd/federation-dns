@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ type FederatedDeploymentOverride struct {
 
 // FederatedDeploymentOverrideSpec defines the desired state of FederatedDeploymentOverride
 type FederatedDeploymentOverrideSpec struct {
-	Overrides []FederatedDeploymentClusterOverride
+	Overrides []FederatedDeploymentClusterOverride `json:"overrides,omitempty"`
 }
 
 // FederatedReplicaSetClusterOverride defines the overrides for a named cluster

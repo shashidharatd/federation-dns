@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package fake
 
 import (
 	clientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset"
+	federatedschedulingv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/typed/federatedscheduling/v1alpha1"
+	fakefederatedschedulingv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/typed/federatedscheduling/v1alpha1/fake"
 	federationv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/typed/federation/v1alpha1"
 	fakefederationv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/typed/federation/v1alpha1/fake"
 	multiclusterdnsv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/typed/multiclusterdns/v1alpha1"
@@ -60,6 +62,16 @@ func (c *Clientset) Discovery() discovery.DiscoveryInterface {
 }
 
 var _ clientset.Interface = &Clientset{}
+
+// FederatedschedulingV1alpha1 retrieves the FederatedschedulingV1alpha1Client
+func (c *Clientset) FederatedschedulingV1alpha1() federatedschedulingv1alpha1.FederatedschedulingV1alpha1Interface {
+	return &fakefederatedschedulingv1alpha1.FakeFederatedschedulingV1alpha1{Fake: &c.Fake}
+}
+
+// Federatedscheduling retrieves the FederatedschedulingV1alpha1Client
+func (c *Clientset) Federatedscheduling() federatedschedulingv1alpha1.FederatedschedulingV1alpha1Interface {
+	return &fakefederatedschedulingv1alpha1.FakeFederatedschedulingV1alpha1{Fake: &c.Fake}
+}
 
 // FederationV1alpha1 retrieves the FederationV1alpha1Client
 func (c *Clientset) FederationV1alpha1() federationv1alpha1.FederationV1alpha1Interface {

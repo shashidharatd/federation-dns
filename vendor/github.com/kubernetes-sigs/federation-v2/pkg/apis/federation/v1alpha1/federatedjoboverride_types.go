@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ type FederatedJobOverride struct {
 
 // FederatedJobOverrideSpec defines the desired state of FederatedJobOverride
 type FederatedJobOverrideSpec struct {
-	Overrides []FederatedJobClusterOverride
+	Overrides []FederatedJobClusterOverride `json:"overrides,omitempty"`
 }
 
 // FederatedJobClusterOverride defines the overrides for a named cluster
