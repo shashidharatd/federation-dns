@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-base_dir="$( cd "$(dirname "$0")" && pwd )"
+base_dir="$( cd "$(dirname "$0")/../.." && pwd )"
 base_dir=${base_dir##$(pwd)/}
 
-source ${base_dir}/util.sh
+source ${base_dir}/docs/common/util.sh
 
 if [[ $# -ne 3 ]]; then
   echo "usage: $0  <cluster-name>  <federation-member-1>  <federation-member-2>"
@@ -31,7 +31,7 @@ run "crinit aggregated init mycr --host-cluster-context=${Cluster}"
 
 run "kubectl create ns federation"
 
-run "kubectl apply -f ${base_dir}/config/apiserver.yaml"
+run "kubectl apply -f ${base_dir}/docs/bringup/config/apiserver.yaml"
 
 run "kubectl api-versions"
 
@@ -43,7 +43,7 @@ done
 run "kubectl get federatedcluster"
 
 # Enable replicaset and service types
-for filename in ${base_dir}/config/federatedtypes/*.yaml; do
+for filename in ${base_dir}/docs/bringup/config/federatedtypes/*.yaml; do
   kubectl create -f "${filename}"
 done
 

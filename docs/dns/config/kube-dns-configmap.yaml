@@ -1,0 +1,14 @@
+apiVersion: federation.k8s.io/v1alpha1
+kind: FederatedConfigMap
+metadata:
+  name: kube-dns
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      name: kube-dns
+      namespace: kube-system
+    data:
+      federations: "galactic=dzone.io"
+      stubDomains: |
+        {"dzone.io": ["192.168.99.240"]}
