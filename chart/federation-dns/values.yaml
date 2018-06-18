@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: shashidharatd/federation-dns
-  tag: v0.1.0
+  tag: v0.2.0
   pullPolicy: IfNotPresent
 
 federationName: myfed

@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,4 +21,9 @@ import (
 )
 
 // Providing 0 duration to an informer indicates that resync should be delayed as long as possible
-const NoResyncPeriod time.Duration = 0 * time.Second
+const (
+	NoResyncPeriod time.Duration = 0 * time.Second
+
+	NamespaceKind = "Namespace"
+	ServiceKind   = "Service"
+)

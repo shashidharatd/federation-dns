@@ -17,15 +17,9 @@ limitations under the License.
 package testutil
 
 import (
-	"fmt"
 	"sync"
 	"time"
 
-	"github.com/kubernetes-sigs/federation-v2/pkg/apis/federation/common"
-	fedapiv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/apis/federation/v1alpha1"
-	"github.com/kubernetes-sigs/federation-v2/pkg/controller/util"
-	apiv1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	core "k8s.io/client-go/testing"
@@ -165,22 +159,6 @@ func RegisterFakeList(resource string, client *core.Fake, obj runtime.Object) {
 	})
 }
 
-// RegisterFakeClusterGet registers a get response for the cluster resource inside the given fake client.
-func RegisterFakeClusterGet(client *core.Fake, obj runtime.Object) {
-	clusterList, ok := obj.(*fedapiv1alpha1.FederatedClusterList)
-	client.AddReactor("get", "federatedclusters", func(action core.Action) (bool, runtime.Object, error) {
-		name := action.(core.GetAction).GetName()
-		if ok {
-			for _, cluster := range clusterList.Items {
-				if cluster.Name == name {
-					return true, &cluster, nil
-				}
-			}
-		}
-		return false, nil, fmt.Errorf("could not find the requested cluster: %s", name)
-	})
-}
-
 // RegisterFakeOnCreate registers a reactor in the given fake client that passes
 // all created objects to the given watcher.
 func RegisterFakeOnCreate(resource string, client *core.Fake, watcher *WatcherDispatcher) {
@@ -247,27 +225,4 @@ func RegisterFakeOnDelete(resource string, client *core.Fake, watcher *WatcherDi
 		return true, obj, nil
 	})
 	return
-}
-
-func ToFederatedInformerForTestOnly(informer util.FederatedInformer) util.FederatedInformerForTestOnly {
-	inter := informer.(interface{})
-	return inter.(util.FederatedInformerForTestOnly)
-}
-
-// NewCluster builds a new cluster object.
-func NewCluster(name string, readyStatus apiv1.ConditionStatus, zone, region string) *fedapiv1alpha1.FederatedCluster {
-	return &fedapiv1alpha1.FederatedCluster{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:        name,
-			Annotations: map[string]string{},
-			Labels:      map[string]string{"cluster": name},
-		},
-		Status: fedapiv1alpha1.FederatedClusterStatus{
-			Conditions: []fedapiv1alpha1.ClusterCondition{
-				{Type: common.ClusterReady, Status: readyStatus},
-			},
-			Zones:  []string{zone},
-			Region: region,
-		},
-	}
 }

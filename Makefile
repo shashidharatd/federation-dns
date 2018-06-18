@@ -21,8 +21,7 @@ DIR := ${CURDIR}
 DOCKER ?= docker
 
 GIT_VERSION ?= $(shell git describe --always --dirty)
-IMAGE_VERSION ?= $(shell git describe --always --dirty)
-GIT_REF = $(shell git rev-parse --short=7 --verify HEAD)
+GIT_TAG ?= $(shell git describe --tags --exact-match 2>/dev/null)
 
 ifneq ($(VERBOSE),)
 VERBOSE_FLAG = -v
@@ -62,19 +61,19 @@ fmt:
 
 container:
 	$(DOCKER) build \
-		-t $(REGISTRY)/$(TARGET):$(IMAGE_VERSION) \
-		-t $(REGISTRY)/$(TARGET):$(GIT_REF) \
+		-t $(REGISTRY)/$(TARGET):$(GIT_VERSION) \
 		.
 
 cbuild:
 	$(DOCKER_BUILD) '$(BUILD)'
 
 push:
-	$(DOCKER) push $(REGISTRY)/$(TARGET):$(GIT_REF)
+	$(DOCKER) push $(REGISTRY)/$(TARGET):$(GIT_VERSION)
 	if git describe --tags --exact-match >/dev/null 2>&1; \
 	then \
-		$(DOCKER) tag $(REGISTRY)/$(TARGET):$(IMAGE_VERSION) $(REGISTRY)/$(TARGET):latest; \
-		$(DOCKER) push $(REGISTRY)/$(TARGET):$(IMAGE_VERSION); \
+		$(DOCKER) tag $(REGISTRY)/$(TARGET):$(GIT_VERSION) $(REGISTRY)/$(TARGET):$(GIT_TAG); \
+		$(DOCKER) push $(REGISTRY)/$(TARGET):$(GIT_TAG); \
+		$(DOCKER) tag $(REGISTRY)/$(TARGET):$(GIT_VERSION) $(REGISTRY)/$(TARGET):latest; \
 		$(DOCKER) push $(REGISTRY)/$(TARGET):latest; \
 	fi
 

@@ -31,8 +31,7 @@ run "crinit aggregated init mycr --host-cluster-context=${Cluster}"
 
 run "kubectl create ns federation"
 
-sed -i 's/memory: 20Mi/memory: 64Mi/;s/memory: 30Mi/memory: 128Mi/' ${GOPATH}/src/github.com/kubernetes-sigs/federation-v2/config/apiserver.yaml
-run "kubectl apply -f ${GOPATH}/src/github.com/kubernetes-sigs/federation-v2/config/apiserver.yaml"
+run "kubectl apply -f ${base_dir}/config/apiserver.yaml"
 
 run "kubectl api-versions"
 
@@ -42,6 +41,11 @@ while [ $? -ne 0 ]; do
     kubectl get federatedcluster
 done
 run "kubectl get federatedcluster"
+
+# Enable replicaset and service types
+for filename in ${base_dir}/config/federatedtypes/*.yaml; do
+  kubectl create -f "${filename}"
+done
 
 run "kubefnord join ${C1} --host-cluster-context ${Cluster} --add-to-registry --v=2"
 run "kubefnord join ${C2} --host-cluster-context ${Cluster} --add-to-registry --v=2"

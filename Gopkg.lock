@@ -316,6 +316,8 @@
   branch = "dns"
   name = "github.com/kubernetes-sigs/federation-v2"
   packages = [
+    "pkg/apis/federatedscheduling",
+    "pkg/apis/federatedscheduling/v1alpha1",
     "pkg/apis/federation",
     "pkg/apis/federation/common",
     "pkg/apis/federation/v1alpha1",
@@ -324,14 +326,15 @@
     "pkg/client/clientset_generated/clientset",
     "pkg/client/clientset_generated/clientset/fake",
     "pkg/client/clientset_generated/clientset/scheme",
+    "pkg/client/clientset_generated/clientset/typed/federatedscheduling/v1alpha1",
+    "pkg/client/clientset_generated/clientset/typed/federatedscheduling/v1alpha1/fake",
     "pkg/client/clientset_generated/clientset/typed/federation/v1alpha1",
     "pkg/client/clientset_generated/clientset/typed/federation/v1alpha1/fake",
     "pkg/client/clientset_generated/clientset/typed/multiclusterdns/v1alpha1",
     "pkg/client/clientset_generated/clientset/typed/multiclusterdns/v1alpha1/fake",
-    "pkg/controller/util",
-    "pkg/controller/util/test"
+    "pkg/controller/util"
   ]
-  revision = "4d4122ab080bd3dcabe3ab5d75cfacfb7d5dce56"
+  revision = "fdca3fcea559da18988559997cb57f03817b85e0"
   source = "github.com/shashidharatd/federation-v2"
 
 [[projects]]
@@ -918,6 +921,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "436bfd1c8cd39803e22f20cc5a4fa2a9224d21b39bb778b279ddfcd8629d9cc5"
+  inputs-digest = "3f39b96606f51bbc2f9b71f309db2fc9b8e75a434de38eb3123835bde9b3a0cd"
   solver-name = "gps-cdcl"
   solver-version = 1

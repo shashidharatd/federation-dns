@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -72,10 +72,9 @@ type FederatedClusterStatus struct {
 	// Conditions is an array of current cluster conditions.
 	// +optional
 	Conditions []ClusterCondition `json:"conditions,omitempty"`
-	// Zones is the list of availability zones in which the nodes of the cluster exist, e.g. 'us-east1-a'.
-	// These will always be in the same region.
+	// Zone is the name of availability zone in which the nodes of the cluster exist, e.g. 'us-east1-a'.
 	// +optional
-	Zones []string `json:"zones,omitempty"`
+	Zone string `json:"zone,omitempty"`
 	// Region is the name of the region in which all of the nodes in the cluster exist.  e.g. 'us-east1'.
 	// +optional
 	Region string `json:"region,omitempty"`

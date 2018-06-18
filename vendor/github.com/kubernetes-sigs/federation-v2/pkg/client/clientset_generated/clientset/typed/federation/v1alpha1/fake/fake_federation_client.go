@@ -1,5 +1,5 @@
 /*
-Copyright 2018 The Federation v2 Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -99,6 +99,10 @@ func (c *FakeFederationV1alpha1) FederatedServices(namespace string) v1alpha1.Fe
 
 func (c *FakeFederationV1alpha1) FederatedServicePlacements(namespace string) v1alpha1.FederatedServicePlacementInterface {
 	return &FakeFederatedServicePlacements{c, namespace}
+}
+
+func (c *FakeFederationV1alpha1) FederatedTypeConfigs() v1alpha1.FederatedTypeConfigInterface {
+	return &FakeFederatedTypeConfigs{c}
 }
 
 func (c *FakeFederationV1alpha1) PropagatedVersions(namespace string) v1alpha1.PropagatedVersionInterface {
