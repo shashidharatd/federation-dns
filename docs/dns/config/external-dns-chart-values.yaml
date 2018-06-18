@@ -1,0 +1,12 @@
+image:
+  tag: v0.5.3
+
+provider: coredns
+sources:
+  - connector
+
+extraArgs:
+  connector-source-server: "milkyway-federation-dns:80"
+
+extraEnv:
+  ETCD_URLS: "http://etcd.fed-dns:2379"
