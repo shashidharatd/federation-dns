@@ -2,6 +2,7 @@
 
 base_dir="$( cd "$(dirname "$0")/.." && pwd )"
 base_dir=${base_dir##$(pwd)/}
+base_dir=.
 
 source ${base_dir}/docs/common/util.sh
 
@@ -53,5 +54,5 @@ sed -i "/nameserver ${coredns_server}/d" /etc/resolv.conf
 
 #kubectl run -it --rm --restart=Never --image=infoblox/dnstools:latest dnstools
 
-run "kubectl delete -f ${base_dir}/docs/federatedapp"
-run "kubectl delete multiclusterservicednsrecords fs1"
+#run "kubectl delete -f ${base_dir}/docs/federatedapp"
+#run "kubectl delete multiclusterservicednsrecords fs1"
