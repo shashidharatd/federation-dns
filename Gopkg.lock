@@ -313,7 +313,7 @@
   version = "v0.1-alpha.28"
 
 [[projects]]
-  branch = "dns"
+  branch = "master"
   name = "github.com/kubernetes-sigs/federation-v2"
   packages = [
     "pkg/apis/federatedscheduling",
@@ -334,8 +334,7 @@
     "pkg/client/clientset_generated/clientset/typed/multiclusterdns/v1alpha1/fake",
     "pkg/controller/util"
   ]
-  revision = "fdca3fcea559da18988559997cb57f03817b85e0"
-  source = "github.com/shashidharatd/federation-v2"
+  revision = "a12bbc429eb4e13bec6443991f3802988fd777e3"
 
 [[projects]]
   name = "github.com/mailru/easyjson"
@@ -921,6 +920,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3f39b96606f51bbc2f9b71f309db2fc9b8e75a434de38eb3123835bde9b3a0cd"
+  inputs-digest = "11ff5f36c6c22f2c808aa0d897b9601610e07d9b484d2ec0664ce853bd0e3caf"
   solver-name = "gps-cdcl"
   solver-version = 1
