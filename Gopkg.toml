@@ -18,8 +18,3 @@
 [[constraint]]
   branch = "release-6.0"
   name = "k8s.io/client-go"
-
-[[constraint]]
-  branch = "dns"
-  name = "github.com/kubernetes-sigs/federation-v2"
-  source = "github.com/shashidharatd/federation-v2"
