@@ -39,8 +39,8 @@ import (
 	"k8s.io/client-go/tools/cache"
 
 	feddnsv1alpha1 "github.com/kubernetes-sigs/federation-v2/pkg/apis/multiclusterdns/v1alpha1"
-	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset"
-	fakefedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset/fake"
+	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset/versioned"
+	fakefedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset/versioned/fake"
 
 	"github.com/shashidharatd/federation-dns/pkg/controller/util/test"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"

@@ -22,8 +22,8 @@ import (
 
 	"github.com/golang/glog"
 
-	controllerlib "github.com/kubernetes-incubator/apiserver-builder/pkg/controller"
-	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset_generated/clientset"
+	fedclientset "github.com/kubernetes-sigs/federation-v2/pkg/client/clientset/versioned"
+	configlib "github.com/kubernetes-sigs/kubebuilder/pkg/config"
 	"github.com/shashidharatd/federation-dns/pkg/controller/dns"
 	"github.com/shashidharatd/federation-dns/pkg/dnsprovider"
 	"github.com/shashidharatd/federation-dns/pkg/source"
@@ -36,7 +36,6 @@ import (
 	_ "github.com/shashidharatd/federation-dns/pkg/dnsprovider/providers/google/clouddns"
 )
 
-var kubeconfig = flag.String("kubeconfig", "", "path to kubeconfig")
 var federationName = flag.String("federation-name", "", "Federation name.")
 var zoneName = flag.String("zone-name", "", "Zone name, like example.com.")
 var zoneID = flag.String("zone-id", "", "Zone ID, needed if the zone name is not unique.")
@@ -48,11 +47,7 @@ var servicePort = flag.String("service-port", "8080", "port on which to make lis
 
 func main() {
 	flag.Parse()
-	config, err := controllerlib.GetConfig(*kubeconfig)
-	if err != nil {
-		glog.Fatalf("Could not create Config for talking to the apiserver: %v", err)
-	}
-
+	config := configlib.GetConfigOrDie()
 	stopChan := make(chan struct{})
 
 	userAgent := "federation-dns"
