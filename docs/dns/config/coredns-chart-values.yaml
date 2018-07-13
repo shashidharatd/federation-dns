@@ -12,4 +12,4 @@ plugins:
     enabled: true
     zones:
     - "dzone.io."
-    endpoint: "http://etcd.fed-dns:2379"
+    endpoint: "http://etcd.federation-system:2379"

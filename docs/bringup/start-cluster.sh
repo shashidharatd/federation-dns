@@ -18,18 +18,10 @@ read -s
 clear
 
 # Demo
-run "minikube start -p ${Cluster}"
+run "minikube start --kubernetes-version v1.11.0 -p ${Cluster}"
 
-run "kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.6.1/manifests/metallb.yaml"
+run "kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.6.2/manifests/metallb.yaml"
 
 run "kubectl apply -f ${base_dir}/docs/bringup/config/${Cluster}-metallb-configmap.yaml"
 
-run "kubectl label node ${Cluster} failure-domain.beta.kubernetes.io/zone=${Zone} failure-domain.beta.kubernetes.io/region=${Region}"
-
-run "helm init"
-
-run "helm version 2>/dev/null"
-while [ $? -ne 0 ]; do
-    sleep 3
-    helm version 2>/dev/null
-done
+run "kubectl label node minikube failure-domain.beta.kubernetes.io/zone=${Zone} failure-domain.beta.kubernetes.io/region=${Region}"

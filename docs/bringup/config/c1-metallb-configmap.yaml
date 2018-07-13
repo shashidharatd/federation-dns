@@ -9,4 +9,4 @@ data:
     - name: default
       protocol: layer2
       addresses:
-      - 192.168.99.240-192.168.99.249
+      - 192.168.99.210/29

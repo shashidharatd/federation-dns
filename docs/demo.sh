@@ -41,7 +41,7 @@ while [ "2" != "$(kubectl --context=${C2} get rs fr1 -o jsonpath="{.status.avail
 done
 run "kubectl --context=${C2} get ep"
 
-coredns_server=$(kubectl -n fed-dns get svc andromeda-coredns -o jsonpath={.status.loadBalancer.ingress[0].ip})
+coredns_server=$(kubectl -n federation-system get svc andromeda-coredns -o jsonpath={.status.loadBalancer.ingress[0].ip})
 sed -i "1inameserver ${coredns_server}" /etc/resolv.conf
 run "curl fs1.default.galactic.svc.dzone.io"
 
@@ -53,6 +53,3 @@ run "curl fs1.default.galactic.svc.dzone.io"
 sed -i "/nameserver ${coredns_server}/d" /etc/resolv.conf
 
 #kubectl run -it --rm --restart=Never --image=infoblox/dnstools:latest dnstools
-
-#run "kubectl delete -f ${base_dir}/docs/federatedapp"
-#run "kubectl delete multiclusterservicednsrecords fs1"

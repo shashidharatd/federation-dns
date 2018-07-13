@@ -9,4 +9,4 @@ extraArgs:
   connector-source-server: "milkyway-federation-dns:80"
 
 extraEnv:
-  ETCD_URLS: "http://etcd.fed-dns:2379"
+  ETCD_URLS: "http://etcd.federation-system:2379"
