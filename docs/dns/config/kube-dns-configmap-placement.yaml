@@ -1,9 +1,0 @@
-apiVersion: federation.k8s.io/v1alpha1
-kind: FederatedConfigMapPlacement
-metadata:
-  name: kube-dns
-  namespace: kube-system
-spec:
-  clusternames:
-  - "c1"
-  - "c2"

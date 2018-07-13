@@ -4,5 +4,5 @@ image:
 
 federationName: galactic
 federationDomain: dzone.io.
-corednsNamespace: fed-dns
+corednsNamespace: federation-system
 dnsProvider: coredns

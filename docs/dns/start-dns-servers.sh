@@ -16,7 +16,7 @@ Mode="v1"
 if [[ -n "$2" ]]; then
   Mode=$2
 fi
-NS="fed-dns"
+NS="federation-system"
 
 read -s
 clear
@@ -32,8 +32,13 @@ function wait_for_pods_to_be_ready() {
 
 kubectl config use-context ${Cluster}
 
-run "# Create fed-dns namespace"
-run "kubectl create ns ${NS}"
+run "helm init"
+
+run "helm version 2>/dev/null"
+while [ $? -ne 0 ]; do
+    sleep 3
+    helm version 2>/dev/null
+done
 
 run "# Start ETCD server. Used as backend for CoreDNS server"
 run "kubectl -n ${NS} run etcd --image=quay.io/coreos/etcd:v3.3 --env="ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379" --env="ETCD_ADVERTISE_CLIENT_URLS=http://etcd.${NS}:2379" --port=2379 --expose"
@@ -53,11 +58,5 @@ if [[ "${Mode}" == "v2" ]]; then
   run "helm install --namespace ${NS} --name whirlpool -f ${base_dir}/docs/dns/config/external-dns-chart-values.yaml stable/external-dns"
   wait_for_pods_to_be_ready "whirlpool-external-dns"
 fi
-
-run "# Configure the local DNS server to fallback to Global DNS"
-# TODO: Obtain the ip of CoreDNS service and configure the kube-dns-config, instead of hard coding as is done now.
-for filename in $(ls ${base_dir}/docs/dns/config/kube-dns-configmap*.yaml); do
-  kubectl create -f "${filename}"
-done
 
 run "kubectl -n ${NS} get pods"
