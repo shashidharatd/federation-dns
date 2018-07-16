@@ -4,5 +4,5 @@ metadata:
   name: fs1
 spec:
   clusternames:
-  - "c1"
-  - "c2"
+  - "minikube"
+  - "secondary"

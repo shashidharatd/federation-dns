@@ -60,3 +60,49 @@ if [[ "${Mode}" == "v2" ]]; then
 fi
 
 run "kubectl -n ${NS} get pods"
+
+global_dns_server=$(kubectl -n ${NS} get svc andromeda-coredns -o jsonpath={.status.loadBalancer.ingress[0].ip})
+
+cat <<EOF | kubectl apply -f -
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      name: coredns
+      namespace: kube-system
+    data:
+      Corefile: |
+        .:53 {
+            errors
+            health
+            kubernetes cluster.local in-addr.arpa ip6.arpa {
+               pods insecure
+               upstream
+               fallthrough in-addr.arpa ip6.arpa
+            }
+            prometheus :9153
+            proxy . /etc/resolv.conf
+            cache 30
+            reload
+            proxy dzone.io ${global_dns_server}
+            federation cluster.local {
+               galactic dzone.io
+            }
+        }
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedConfigMapPlacement
+metadata:
+  name: coredns
+  namespace: kube-system
+spec:
+  clusternames:
+  - "minikube"
+  - "secondary"
+EOF
