@@ -1,8 +1,0 @@
-image:
-  repository: shashidharatd/federation-dns
-  tag: v0.0.1
-
-federationName: galactic
-federationDomain: dzone.io.
-corednsNamespace: federation-system
-dnsProvider: coredns

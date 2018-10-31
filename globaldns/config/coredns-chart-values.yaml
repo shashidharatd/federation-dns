@@ -1,0 +1,18 @@
+image:
+  tag: "1.2.5"
+isClusterService: false
+service:
+  type: "LoadBalancer"
+
+servers:
+- zones:
+  - zone: .
+  port: 53
+  plugins:
+  - name: health
+  - name: errors
+  - name: log
+  - name: etcd
+    parameters: "f8n.org."
+    configBlock: |-
+      endpoint "http://etcd.federation-system:2379"

@@ -1,0 +1,24 @@
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      name: kube-dns
+      namespace: kube-system
+      labels:
+        addonmanager.kubernetes.io/mode: EnsureExists
+    data:
+      federations: production=prod.f8n.org,staging=stage.f8n.org
+---
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedConfigMapPlacement
+metadata:
+  name: kube-dns
+  namespace: kube-system
+spec:
+  clusterNames:
+  - "cluster1"
+  - "cluster2"

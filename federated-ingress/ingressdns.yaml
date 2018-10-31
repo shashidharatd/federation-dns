@@ -1,0 +1,8 @@
+apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+kind: IngressDNSRecord
+metadata:
+  name: fi1
+spec:
+  hosts:
+  - foo.fing.f8n.org
+  recordTTL: 180

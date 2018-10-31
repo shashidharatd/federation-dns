@@ -1,0 +1,6 @@
+apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+kind: Domain
+metadata:
+  name: production
+  namespace: federation-system
+domain: prod.f8n.orguction

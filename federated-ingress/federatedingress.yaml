@@ -1,0 +1,23 @@
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedIngress
+metadata:
+  name: fi1
+spec:
+  template:
+    spec:
+      rules:
+      - host: foo.fing.f8n.org
+        http:
+          paths:
+          - backend:
+              serviceName: fs1
+              servicePort: 80
+---
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedIngressPlacement
+metadata:
+  name: fi1
+spec:
+  clusternames:
+  - cluster1
+  - cluster2
