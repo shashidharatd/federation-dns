@@ -1,4 +1,4 @@
-apiVersion: core.federation.k8s.io/v1alpha1
+apiVersion: primitives.federation.k8s.io/v1alpha1
 kind: FederatedIngress
 metadata:
   name: fi1
@@ -13,7 +13,7 @@ spec:
               serviceName: fs1
               servicePort: 80
 ---
-apiVersion: core.federation.k8s.io/v1alpha1
+apiVersion: primitives.federation.k8s.io/v1alpha1
 kind: FederatedIngressPlacement
 metadata:
   name: fi1

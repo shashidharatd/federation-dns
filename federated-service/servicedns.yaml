@@ -3,5 +3,5 @@ kind: ServiceDNSRecord
 metadata:
   name: fs1
 spec:
-  federation: production
-  recordTTL: 300
+  domainRef: production
+  EnableWeightedTargets: true

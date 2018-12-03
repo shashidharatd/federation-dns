@@ -3,4 +3,4 @@ kind: Domain
 metadata:
   name: production
   namespace: federation-system
-domain: prod.f8n.orguction
+domain: prod.f8n.org

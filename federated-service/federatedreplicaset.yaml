@@ -1,4 +1,4 @@
-apiVersion: core.federation.k8s.io/v1alpha1
+apiVersion: primitives.federation.k8s.io/v1alpha1
 kind: FederatedReplicaSet
 metadata:
   name: fr1
@@ -42,7 +42,7 @@ spec:
                   fieldRef:
                     fieldPath: spec.serviceAccountName
 ---
-apiVersion: core.federation.k8s.io/v1alpha1
+apiVersion: primitives.federation.k8s.io/v1alpha1
 kind: FederatedReplicaSetPlacement
 metadata:
   name: fr1
@@ -50,3 +50,12 @@ spec:
   clusterNames:
   - cluster1
   - cluster2
+---
+apiVersion: primitives.federation.k8s.io/v1alpha1
+kind: FederatedReplicaSetOverride
+metadata:
+  name: fr1
+spec:
+  overrides:
+  - clusterName: cluster2
+    replicas: 3
