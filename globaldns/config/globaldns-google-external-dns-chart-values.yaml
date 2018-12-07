@@ -10,6 +10,5 @@ sources:
 extraArgs:
   crd-source-apiversion: multiclusterdns.federation.k8s.io/v1alpha1
   crd-source-kind: DNSEndpoint
-  txt-prefix: "prfx"
 
-txt-owner-id: "baaz"
+registry: "noop"

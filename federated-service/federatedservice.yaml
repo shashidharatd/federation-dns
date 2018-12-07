@@ -18,6 +18,4 @@ kind: FederatedServicePlacement
 metadata:
   name: fs1
 spec:
-  clusterNames:
-  - cluster1
-  - cluster2
+  clusterSelector: {}

@@ -4,4 +4,5 @@ metadata:
   name: fs1
 spec:
   domainRef: production
-  EnableWeightedTargets: true
+  enableWeightedTargets: true
+  dnsPrefix: mall

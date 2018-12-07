@@ -47,9 +47,7 @@ kind: FederatedReplicaSetPlacement
 metadata:
   name: fr1
 spec:
-  clusterNames:
-  - cluster1
-  - cluster2
+  clusterSelector: {}
 ---
 apiVersion: primitives.federation.k8s.io/v1alpha1
 kind: FederatedReplicaSetOverride
@@ -57,5 +55,11 @@ metadata:
   name: fr1
 spec:
   overrides:
+  - clusterName: cluster1
+    clusterOverrides:
+    - path: spec.replicas
+      value: 1
   - clusterName: cluster2
-    replicas: 3
+    clusterOverrides:
+    - path: spec.replicas
+      value: 2

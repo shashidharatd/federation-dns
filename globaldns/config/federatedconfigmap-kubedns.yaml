@@ -19,6 +19,4 @@ metadata:
   name: kube-dns
   namespace: kube-system
 spec:
-  clusterNames:
-  - "cluster1"
-  - "cluster2"
+  clusterSelector: {}

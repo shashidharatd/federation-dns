@@ -35,6 +35,4 @@ metadata:
   name: coredns
   namespace: kube-system
 spec:
-  clusterNames:
-  - "cluster1"
-  - "cluster2"
+  clusterSelector: {}
